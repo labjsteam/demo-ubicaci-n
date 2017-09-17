@@ -4,21 +4,74 @@
 	<meta charset="UTF-8">
 	<title>Tu ubicación</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"/>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./css/main.css">
 </head>
 <body>
 	<section class="container">
 		<div class="row">
+			<h1 class="center">Tú ubicación</h1>
+		</div>
+		<div class="row fila-uno">
 			<div class="col s6">
-				<h1>Hola</h1>
+				<div class="row fila-uno">
+					<div class="col s10 offset-s1">
+						<button class="waves-effect waves-light btn modal-trigger" href="#modal1">
+							<i class="material-icons left">
+							edit_location</i>Ingresa tus coordenadas
+						</button>
+					</div>
+				</div>
+				<div id="modal1" class="modal">
+					<div class="modal-content">
+						<div class="row">
+							<form class="col s12">
+								<div class="row">
+									<div class="input-field col s6">
+										<i class="material-icons prefix">location_on</i>
+										<input id="primera-ubicacion" type="text" class="validate">
+										<label for="primera-ubicacion">Primera ubicación</label>
+									</div>
+									<div class="input-field col s6">
+										<i class="material-icons prefix">location_on</i>
+										<input id="segunda-ubicacion" type="text" class="validate">
+										<label for="segunda-ubicacion">Segunda ubicación</label>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Mostrar</a>
+					</div>
+				</div>
+				<div class="row fila-uno">
+					<div id="map" class="col-12">
+						<img src="https://goo.gl/FSRPBj" class="imagen-mapa-uno">
+					</div>
+				</div>
 			</div>
 			<div class="col s6">
-				<h1>adios</h1>
+				<div class="row fila-uno">
+					<div class="col s8 offset-s2">
+						<button class="waves-effect waves-light btn">
+							<i class="material-icons left">
+							location_on</i>Ubicación actual
+						</button>
+					</div>
+				</div>
+				
+				<div class="row fila-uno">
+					<div id="map" class="col-12">
+						<img src="https://goo.gl/FSRPBj" class="imagen-mapa-uno">
+					</div>
+				</div>
 			</div>
 		</div>
 		
 	</section>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<script src="./js/app.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 (function(){
 	var cargarPagina = function() {
-		alert('hola');
+		$('.modal').modal();
 	}
 	
 	$(document).ready(cargarPagina);
