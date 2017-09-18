@@ -5,16 +5,16 @@
 
 	var cargarPagina = function() {
 		$('.modal').modal();
-		// latitud.keydown(validarNumeros);
-		// longitud.keydown(validarNumeros);
+		latitud.keydown(validarNumeros);
+		longitud.keydown(validarNumeros);
 		// comprobarNavegador();
 		btnMostrarLugarFavorito.click(initMap);
 	}
-	// var validarNumeros = function(e){
-	// 	if (e.keyCode !== 8 && (e.keyCode < 48 || e.keyCode > 57)){
-	// 		e.preventDefault();
-	// 	}	
-	// };
+	var validarNumeros = function(e){
+		if (e.keyCode !== 8 && (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 189 || e.keyCode > 190)){
+			e.preventDefault();
+		}	
+	};
 	// var comprobarNavegador = function() {
 	// 	if ("geolocation" in navigator) {
 	// 		// obtenerUbicacion es nuestra primera funcion como parametro
@@ -26,6 +26,7 @@
 	// 	}
 	// }
 	var initMap = function() {
+		// lat y lng solo recibe numeros, por eso la conversion
 		var valorLatitud = parseInt(latitud.val());
 		var valorLongitud = parseInt(longitud.val());
 		console.log(typeof valorLatitud);
