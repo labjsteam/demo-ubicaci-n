@@ -29,28 +29,30 @@
 								<div class="row">
 									<div class="input-field col s6">
 										<i class="material-icons prefix">location_on</i>
-										<input id="primera-ubicacion" type="text" class="validate numeros" maxlength="9">
-										<label for="primera-ubicacion">Primera ubicación</label>
+										<input id="latitud" type="text" class="validate numeros" maxlength="15">
+										<label for="latitud">Latitud</label>
 									</div>
 									<div class="input-field col s6">
 										<i class="material-icons prefix">location_on</i>
-										<input id="segunda-ubicacion" type="text" class="validate numeros" maxlength="9">
-										<label for="segunda-ubicacion">Segunda ubicación</label>
+										<input id="longitud" type="text" class="validate numeros" maxlength="15">
+										<label for="longitud">Longitud</label>
 									</div>
 								</div>
 							</form>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="modal-action modal-close waves-effect waves-green btn-flat">
+						<button class="modal-action modal-close waves-effect waves-green btn-flat" id="mostrarLugarFavorito">
 							Mostrar
 						</button>
 					</div>
 				</div>
 				<div class="row">
-					<div id="map" class="col-12">
-						<img src="https://goo.gl/FSRPBj" class="imagen-mapa">
+					<!-- Este es el div que mostrara nuestro mapa,
+						importante ponerles un tamaño -->
+					<div id="mapa" class="col-12 imagen-mapa">
 					</div>
+
 				</div>
 			</div>
 			<div class="col s6">
@@ -70,10 +72,12 @@
 				</div>
 			</div>
 		</div>
-		
 	</section>
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb4XMDTvfDKBocqRUjGB8lx8m3e4v5qLA">
+    </script>
 	<script src="./js/app.js"></script>
 </body>
 </html>
