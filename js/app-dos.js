@@ -2,13 +2,16 @@
 	var latitud = $('#latitud');
 	var longitud = $('#longitud');
 	var btnMostrarLugarFavorito = $('#mostrarLugarFavorito');
+	var btnUbicacionActual = $('#btn-ubicacion-actual');
 
 	var cargarPagina = function() {
 		$('.modal').modal();
 		latitud.keydown(validarNumeros);
 		longitud.keydown(validarNumeros);
-		comprobarNavegador();
+		// la descomentamos al principio para que vean que si entra la funcion
+		// comprobarNavegador();
 		btnMostrarLugarFavorito.click(initMap);
+		btnUbicacionActual.click(comprobarNavegador);
 	}
 	var validarNumeros = function(e){
 		if (e.keyCode !== 8 && (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 189 || e.keyCode > 190)){
@@ -19,11 +22,11 @@
 		if ("geolocation" in navigator) {
 			// obtenerUbicacion es nuestra primera funcion como parametro
 			console.log('si acepta tu navegador el GPS');
-			navigator.geolocation.getCurrentPosition(function(error) {
+			navigator.geolocation.getCurrentPosition(ubicacionActual,function(error) {
 				console.log(error);
 			});
-		} else {
-			alert('Tu navegador no soporta el GPS');
+		}else{
+			alert('Actualiza tu navegador');
 		}
 	}
 	var initMap = function() {
@@ -49,5 +52,26 @@
         });
 	};
 
+	var ubicacionActual = function(posicion){
+		console.log(posicion);
+		var coordenadasActuales = {
+			lat: posicion.coords.latitude, 
+			lng: posicion.coords.longitude
+		};
+
+		mostrarMapaActual(coordenadasActuales);
+	}
+
+	var mostrarMapaActual = function( coordenadasActuales) {
+		var mapa = new google.maps.Map($('#mapa-ubicacion-actual')[0], {
+			zoom: 18,
+			center: coordenadasActuales
+		});
+		var marcador = new google.maps.Marker({
+			position: coordenadasActuales,
+			map: mapa,
+			title: 'Tu ubicación'
+		});
+	}
 	$(document).ready(cargarPagina);
 })();
