@@ -3,7 +3,9 @@
 	var longitud = $('#longitud');
 	var btnMostrarLugarFavorito = $('#mostrarLugarFavorito');
 	var btnUbicacionActual = $('#btn-ubicacion-actual');
-
+	// lat y lng solo recibe numeros, por eso la conversion
+	var valorLatitud = Number(latitud.val());
+	var valorLongitud = Number(longitud.val());
 	var cargarPagina = function() {
 		$('.modal').modal();
 		latitud.keydown(validarNumeros);
@@ -30,12 +32,6 @@
 		}
 	}
 	var initMap = function() {
-		// lat y lng solo recibe numeros, por eso la conversion
-		var valorLatitud = Number(latitud.val());
-		var valorLongitud = Number(longitud.val());
-		console.log(typeof valorLatitud);
-		console.log( typeof valorLongitud);
-
         var misCoordenadas = {
 	        	// lat: -25.363,
 	        	// lng: 131.044
@@ -43,17 +39,18 @@
 	        	lng: valorLongitud
         	};
         var map = new google.maps.Map($('#mapa')[0], {
-          zoom: 4,
+          zoom: 18,
           center: misCoordenadas
         });
         var marker = new google.maps.Marker({
           position: misCoordenadas,
           map: map
         });
+
 	};
 
 	var ubicacionActual = function(posicion){
-		console.log(posicion);
+		// console.log(posicion);
 		var coordenadasActuales = {
 			lat: posicion.coords.latitude, 
 			lng: posicion.coords.longitude
@@ -63,6 +60,7 @@
 	}
 
 	var mostrarMapaActual = function( coordenadasActuales) {
+		var btnRuta = $('#btnRuta');
 		var mapa = new google.maps.Map($('#mapa-ubicacion-actual')[0], {
 			zoom: 18,
 			center: coordenadasActuales
@@ -72,6 +70,25 @@
 			map: mapa,
 			title: 'Tu ubicación'
 		});
+
+		//crear un boton 
+		var botonRuta = $('<button />', {"class":"waves-effect waves-light btn"});
+		botonRuta.text("mostrar ruta");
+		botonRuta.click(trazarRuta);
+		btnRuta.append(botonRuta);
+		trazarRuta(mapa);
 	}
+
+	var trazarRuta = function(mapa) {
+		var obtenerCoordenadas = mapa.center;
+		// console.log(obtenerCoordenadas.lat());
+	
+		var coordenadasRuta = {
+			lat: obtenerCoordenadas.lat(),
+			lng: obtenerCoordenadas.lng()
+		};		
+		console.log('ruta' + coordenadasRuta.lat);
+	}
+	
 	$(document).ready(cargarPagina);
 })();
