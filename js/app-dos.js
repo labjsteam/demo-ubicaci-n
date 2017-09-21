@@ -88,7 +88,15 @@
 			lng: obtenerCoordenadas.lng()
 		};		
 		console.log('ruta' + coordenadasRuta.lat);
+		// mapa.drawRoute({
+		// 	origin: [coordenadasRuta.lat, coordenadasRuta.lng],
+		// 	destination: [valorLatitud, valorLongitud],
+		// 	travelMode: 'driving',
+		// 	strokeColor: '#131540',
+		// 	strokeOpacity: 0.6,
+		// 	strokeWeight: 6
+		// });
 	}
-	
+
 	$(document).ready(cargarPagina);
 })();
