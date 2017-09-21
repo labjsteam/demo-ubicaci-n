@@ -6,6 +6,7 @@
 	// lat y lng solo recibe numeros, por eso la conversion
 	var valorLatitud = Number(latitud.val());
 	var valorLongitud = Number(longitud.val());
+
 	var cargarPagina = function() {
 		$('.modal').modal();
 		latitud.keydown(validarNumeros);
@@ -31,6 +32,7 @@
 			alert('Actualiza tu navegador');
 		}
 	}
+
 	var initMap = function() {
         var misCoordenadas = {
 	        	// lat: -25.363,
@@ -39,14 +41,13 @@
 	        	lng: valorLongitud
         	};
         var map = new google.maps.Map($('#mapa')[0], {
-          zoom: 18,
+          zoom: 4,
           center: misCoordenadas
         });
         var marker = new google.maps.Marker({
           position: misCoordenadas,
           map: map
         });
-
 	};
 
 	var ubicacionActual = function(posicion){
@@ -76,18 +77,19 @@
 		botonRuta.text("mostrar ruta");
 		botonRuta.click(trazarRuta);
 		btnRuta.append(botonRuta);
-		trazarRuta(mapa);
+		// trazarRuta(mapa);
 	}
 
-	var trazarRuta = function(mapa) {
-		var obtenerCoordenadas = mapa.center;
-		// console.log(obtenerCoordenadas.lat());
+	var trazarRuta = function() {
+
+		// var obtenerCoordenadas = mapa.center;
+		// // console.log(obtenerCoordenadas.lat());
 	
-		var coordenadasRuta = {
-			lat: obtenerCoordenadas.lat(),
-			lng: obtenerCoordenadas.lng()
-		};		
-		console.log('ruta' + coordenadasRuta.lat);
+		// var coordenadasRuta = {
+		// 	lat: obtenerCoordenadas.lat(),
+		// 	lng: obtenerCoordenadas.lng()
+		// };		
+		// console.log('ruta' + coordenadasRuta.lat);
 		// mapa.drawRoute({
 		// 	origin: [coordenadasRuta.lat, coordenadasRuta.lng],
 		// 	destination: [valorLatitud, valorLongitud],
@@ -96,7 +98,28 @@
 		// 	strokeOpacity: 0.6,
 		// 	strokeWeight: 6
 		// });
-	}
+		// var misCoordenadas = {
+	 //        	lat: -25.363,
+	 //        	lng: 131.044
+  //       	};
+		// var mapita = new google.maps.Map($('#mapa-ubicacion-actual')[0], {
+		// 	zoom: 8,
+		// 	center: misCoordenadas
+		// });
+	      var mapita = new GMaps({
+	        el: '#mapa-ubicacion-actual',
+	        lat: -12.044012922866312,
+	        lng: -77.02470665341184
+	      });
+	      mapita.drawRoute({
+	        origin: [-12.044012922866312, -77.02470665341184],
+	        destination: [-12.090814532191756, -77.02271108990476],
+	        travelMode: 'driving',
+	        strokeColor: '#131540',
+	        strokeOpacity: 0.6,
+	        strokeWeight: 6
+	      });
+		}
 
 	$(document).ready(cargarPagina);
 })();
