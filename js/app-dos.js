@@ -44,21 +44,21 @@
 
 	function initMap() {
 		// lat y lng solo recibe numeros, por eso la conversion
-		var valorLatitud = Number(latitud.val());
-		var valorLongitud = Number(longitud.val());
+		valorLatitud = Number(latitud.val());
+		valorLongitud = Number(longitud.val());
+
         misCoordenadas = {
 			lat: valorLatitud,
 			lng: valorLongitud
         };
-        var map = new google.maps.Map($('#mapa')[0], {
-        	zoom: 4,
-        	center: misCoordenadas
+        var map = new google.maps.Map($('#mapa')[0], {=
+          zoom: 18,
+          center: misCoordenadas
         });
         var marker = new google.maps.Marker({
         	position: misCoordenadas,
         	map: map
         });
-
 	};
 
 	function ubicacionActual(posicion){
@@ -92,6 +92,7 @@
 		btnRuta.append(botonRuta);
 	}
 
+
 	function trazarRuta(misCoordenadas, coordenadasActuales) {
 		
 		// Almacenas en variables independientes lo que recibes por parámetros
@@ -121,6 +122,7 @@
 	         strokeWeight: 6
 	       }); */
 		}
+
 
 	$(document).ready(cargarPagina);
 })();
