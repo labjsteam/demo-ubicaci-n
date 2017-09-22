@@ -1,11 +1,20 @@
 (function(){
+	
+	// Defines variables globales
 	var latitud = $('#latitud');
 	var longitud = $('#longitud');
 	var btnMostrarLugarFavorito = $('#mostrarLugarFavorito');
 	var btnUbicacionActual = $('#btn-ubicacion-actual');
-	var valorLatitud = 0;
-	var valorLongitud = 0;
-	var cargarPagina = function() {
+	var coordenadasActuales;
+	var misCoordenadas;
+
+
+
+	/**
+	 * Como referencia las funciones nombralas de la forma function name(){} para evitar confusión
+	 */	
+
+	function cargarPagina() {
 		$('.modal').modal();
 		latitud.keydown(validarNumeros);
 		longitud.keydown(validarNumeros);
@@ -14,12 +23,14 @@
 		btnMostrarLugarFavorito.click(initMap);
 		btnUbicacionActual.click(comprobarNavegador);
 	}
-	var validarNumeros = function(e){
+
+
+	function validarNumeros(e){
 		if (e.keyCode !== 8 && (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 189 || e.keyCode > 190)){
 			e.preventDefault();
 		}	
 	};
-	var comprobarNavegador = function() {
+	function comprobarNavegador() {
 		if ("geolocation" in navigator) {
 			// obtenerUbicacion es nuestra primera funcion como parametro
 			console.log('si acepta tu navegador el GPS');
@@ -31,29 +42,26 @@
 		}
 	}
 
-	var initMap = function() {
+	function initMap() {
 		// lat y lng solo recibe numeros, por eso la conversion
 		valorLatitud = Number(latitud.val());
 		valorLongitud = Number(longitud.val());
 
         misCoordenadas = {
-	        	// lat: -25.363,
-	        	// lng: 131.044
-	        	lat: valorLatitud,
-	        	lng: valorLongitud
-        	};   
-        var map = new google.maps.Map($('#mapa')[0], {
+			lat: valorLatitud,
+			lng: valorLongitud
+        };
+        var map = new google.maps.Map($('#mapa')[0], {=
           zoom: 18,
           center: misCoordenadas
         });
         var marker = new google.maps.Marker({
-          position: misCoordenadas,
-          map: map
+        	position: misCoordenadas,
+        	map: map
         });
 	};
 
-	var ubicacionActual = function(posicion){
-		// console.log(posicion);
+	function ubicacionActual(posicion){
 		coordenadasActuales = {
 			lat: posicion.coords.latitude, 
 			lng: posicion.coords.longitude
@@ -61,7 +69,7 @@
 		mostrarMapaActual(coordenadasActuales);
 	}
 
-	var mostrarMapaActual = function( coordenadasActuales) {
+	function mostrarMapaActual(coordenadasActuales) {
 		var btnRuta = $('#btnRuta');
 		var mapa = new google.maps.Map($('#mapa-ubicacion-actual')[0], {
 			zoom: 18,
@@ -77,31 +85,44 @@
 		botonRuta.text("mostrar ruta");
 		// botonRuta.click(trazarRuta);
 		botonRuta.on('click', function() {
-            trazarRuta(coordenadasActuales);
+
+			// Anteriormente solo tenías un parametro, recuerda que recibe dos.
+            trazarRuta(misCoordenadas,coordenadasActuales);
         })
 		btnRuta.append(botonRuta);
 	}
 
-	var trazarRuta = function(coordenadasActuales) {
-		console.log(coordenadasActuales);
-		console.log(valorLongitud);
-		console.log(valorLatitud);
-		
-		var mapita = new GMaps({
-			el: '#mapa-ubicacion-actual',
-			lat: coordenadasActuales.lat,
-			lng: coordenadasActuales.lng
-		});
-		mapita.drawRoute({
-			origin: [coordenadasActuales.lat, coordenadasActuales.lng],
-			destination: [valorLatitud, valorLongitud],
-			travelMode: 'driving',
-			strokeColor: '#131540',
-			strokeOpacity: 0.6,
-			strokeWeight: 6
-		});
 
-	}
+	function trazarRuta(misCoordenadas, coordenadasActuales) {
+		
+		// Almacenas en variables independientes lo que recibes por parámetros
+		// Como parámetro recibes dos objetos, anteriormente recibias uno
+		var puntoUno = misCoordenadas;	
+		var puntoDos = coordenadasActuales;
+
+
+		// Para pintar la ruta solo necesitarias pasar el origen y el destino (la variable puntoUno y Dos)
+
+
+		/*  mapa.drawRoute({
+		 	origin: [coordenadasRuta.lat, coordenadasRuta.lng],
+		 	destination: [valorLatitud, valorLongitud],
+		 	travelMode: 'driving',
+		 	strokeColor: '#131540',
+		 	strokeOpacity: 0.6,
+		 	strokeWeight: 6
+		 });
+
+	       mapita.drawRoute({
+	         origin: [-12.044012922866312, -77.02470665341184],
+	         destination: [-12.090814532191756, -77.02271108990476],
+	         travelMode: 'driving',
+	         strokeColor: '#131540',
+	         strokeOpacity: 0.6,
+	         strokeWeight: 6
+	       }); */
+		}
+
 
 	$(document).ready(cargarPagina);
 })();
