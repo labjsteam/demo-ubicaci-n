@@ -3,7 +3,8 @@
 	var longitud = $('#longitud');
 	var btnMostrarLugarFavorito = $('#mostrarLugarFavorito');
 	var btnUbicacionActual = $('#btn-ubicacion-actual');
-	var coordenadasActuales;
+	var valorLatitud = 0;
+	var valorLongitud = 0;
 	var cargarPagina = function() {
 		$('.modal').modal();
 		latitud.keydown(validarNumeros);
@@ -32,8 +33,9 @@
 
 	var initMap = function() {
 		// lat y lng solo recibe numeros, por eso la conversion
-		var valorLatitud = Number(latitud.val());
-		var valorLongitud = Number(longitud.val());
+		valorLatitud = Number(latitud.val());
+		valorLongitud = Number(longitud.val());
+
         misCoordenadas = {
 	        	// lat: -25.363,
 	        	// lng: 131.044
@@ -41,15 +43,13 @@
 	        	lng: valorLongitud
         	};   
         var map = new google.maps.Map($('#mapa')[0], {
-          zoom: 4,
+          zoom: 18,
           center: misCoordenadas
         });
         var marker = new google.maps.Marker({
           position: misCoordenadas,
           map: map
         });
-        return misCoordenadas;
-     	// console.log(misCoordenadas);
 	};
 
 	var ubicacionActual = function(posicion){
@@ -80,52 +80,28 @@
             trazarRuta(coordenadasActuales);
         })
 		btnRuta.append(botonRuta);
-		return coordenadasActuales;
 	}
 
-	var trazarRuta = function(misCoordenadas, coordenadasActuales) {
-		var puntoUno = initMap(misCoordenadas);	
-		var puntoDos = coordenadasActuales;
-		console.log(puntoUno, puntoDos);
-		// console.log(misCoordenadas, coordenadasActuales);
-		// console.log(puntoUno);
+	var trazarRuta = function(coordenadasActuales) {
+		console.log(coordenadasActuales);
+		console.log(valorLongitud);
+		console.log(valorLatitud);
+		
+		var mapita = new GMaps({
+			el: '#mapa-ubicacion-actual',
+			lat: coordenadasActuales.lat,
+			lng: coordenadasActuales.lng
+		});
+		mapita.drawRoute({
+			origin: [coordenadasActuales.lat, coordenadasActuales.lng],
+			destination: [valorLatitud, valorLongitud],
+			travelMode: 'driving',
+			strokeColor: '#131540',
+			strokeOpacity: 0.6,
+			strokeWeight: 6
+		});
 
-
-		// var coordenadasPuntoUno = {
-		// 	lat: puntoUno.lat,
-		// 	lng: puntoUno.lng
-		// };		
-		// console.log('las rutas' + coordenadasPuntoUno.lat + coordenadasPuntoUno.lng);
-		// mapa.drawRoute({
-		// 	origin: [coordenadasRuta.lat, coordenadasRuta.lng],
-		// 	destination: [valorLatitud, valorLongitud],
-		// 	travelMode: 'driving',
-		// 	strokeColor: '#131540',
-		// 	strokeOpacity: 0.6,
-		// 	strokeWeight: 6
-		// });
-		// var misCoordenadas = {
-	 //        	lat: -25.363,
-	 //        	lng: 131.044
-  //       	};
-		// var mapita = new google.maps.Map($('#mapa-ubicacion-actual')[0], {
-		// 	zoom: 8,
-		// 	center: misCoordenadas
-		// });
-	      // var mapita = new GMaps({
-	      //   el: '#mapa-ubicacion-actual',
-	      //   lat: -12.044012922866312,
-	      //   lng: -77.02470665341184
-	      // });
-	      // mapita.drawRoute({
-	      //   origin: [-12.044012922866312, -77.02470665341184],
-	      //   destination: [-12.090814532191756, -77.02271108990476],
-	      //   travelMode: 'driving',
-	      //   strokeColor: '#131540',
-	      //   strokeOpacity: 0.6,
-	      //   strokeWeight: 6
-	      // });
-		}
+	}
 
 	$(document).ready(cargarPagina);
 })();
